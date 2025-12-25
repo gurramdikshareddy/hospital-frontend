@@ -374,3 +374,21 @@ export default function AddPatientModal({ open, onClose }: AddPatientModalProps)
     </Dialog>
   );
 }
+import { Patient } from "@/types/hospital";
+const BASE_URL = "https://hospital-backend-api-l71r.onrender.com";
+
+export async function createPatient(patient: Patient) {
+  const res = await fetch(`${BASE_URL}/api/patients`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(patient)
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create patient");
+  }
+
+  return res.json();
+}
